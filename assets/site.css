@@ -18,3 +18,26 @@
 .cover-art{background:#fff;display:flex;align-items:center;justify-content:center;padding:20px 28px}
 .cover-logo{display:block;width:min(88%,340px);height:auto;max-height:100%;object-fit:contain;position:relative;z-index:2}
 @media(max-width:560px){.cover-logo{width:92%;max-height:155px}}
+
+
+/* Published issue archive */
+.published-issues{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:34px}
+.published-issue{display:grid;grid-template-columns:140px 1fr;gap:20px;align-items:stretch;padding:18px;border:1px solid #dce6ef;border-radius:16px;background:#fff;color:inherit;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.published-issue:hover{transform:translateY(-3px);border-color:#9dc6e4;box-shadow:0 12px 30px rgba(19,65,103,.09)}
+.published-issue-cover,.issue-detail-cover{background:#f3f8fc;border-radius:10px;display:flex;align-items:center;justify-content:center;min-height:190px;padding:14px}
+.published-issue-cover img,.issue-detail-cover img{width:100%;height:100%;max-height:210px;object-fit:contain}
+.published-issue-info{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.published-issue-info h2{font-size:1.25rem;line-height:1.25;margin:9px 0}
+.published-issue-info p{color:#536779;margin:0 0 14px}
+.issue-open-link{color:#0866ad;font-weight:700;margin-top:auto}
+.archive-loading,.archive-empty{padding:24px;border:1px dashed #c8d8e6;border-radius:12px;color:#526779}
+.issue-detail{margin-top:24px}
+.issue-detail-layout{display:grid;grid-template-columns:minmax(220px, .8fr) minmax(0,1.2fr);gap:38px;align-items:start;margin-top:22px}
+.issue-detail-cover{min-height:360px;padding:28px}
+.issue-detail-cover img{max-height:300px}
+.issue-detail-copy h1{margin:10px 0 14px}
+.issue-detail-copy>p{color:#536779;line-height:1.65}
+.issue-price{font-weight:800;color:#123d61!important;font-size:1.15rem}
+.issue-detail-copy .code-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.issue-detail-copy .code-form input{flex:1;min-width:180px}
+@media(max-width:650px){.published-issue{grid-template-columns:100px 1fr;padding:13px;gap:13px}.published-issue-cover{min-height:145px}.issue-detail-layout{grid-template-columns:1fr;gap:22px}.issue-detail-cover{min-height:230px}.issue-detail-cover img{max-height:190px}}
