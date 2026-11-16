@@ -41,3 +41,5 @@
 .issue-detail-copy .code-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .issue-detail-copy .code-form input{flex:1;min-width:180px}
 @media(max-width:650px){.published-issue{grid-template-columns:100px 1fr;padding:13px;gap:13px}.published-issue-cover{min-height:145px}.issue-detail-layout{grid-template-columns:1fr;gap:22px}.issue-detail-cover{min-height:230px}.issue-detail-cover img{max-height:190px}}
+
+.issue-row .danger{color:#a12626;border-color:#efcaca;background:#fff8f8}.cover-logo{width:92%;max-width:340px;max-height:100%;object-fit:contain}
