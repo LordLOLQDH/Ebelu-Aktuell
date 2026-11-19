@@ -32,7 +32,28 @@ async function restoreAdminSession(){if(!adminSession||!$("login-box"))return;tr
  panel.innerHTML='<div class="ebelu-ai-head"><div><strong>Ebelu KI</strong><small>Schulfragen · Zeitung · Lernen</small></div><button type="button" class="ebelu-ai-close" aria-label="Schließen">×</button></div><div class="ebelu-ai-notice">Ich bin ein KI-Assistent. Prüfe wichtige Informationen bitte zusätzlich.</div><div class="ebelu-ai-messages" id="ebelu-ai-messages" aria-live="polite"><div class="ebelu-ai-bubble bot">Hallo! Ich kann dir bei Schulthemen helfen und bekannte Inhalte aus Ebelu Aktuell erklären. Was möchtest du wissen?</div></div><form id="ebelu-ai-form" class="ebelu-ai-form"><textarea id="ebelu-ai-input" rows="2" maxlength="1200" placeholder="Schreib deine Frage …" required></textarea><button type="submit" class="primary" id="ebelu-ai-send">Senden</button></form>';
  document.body.append(launcher,panel);
  const messages=panel.querySelector("#ebelu-ai-messages"),form=panel.querySelector("#ebelu-ai-form"),input=panel.querySelector("#ebelu-ai-input"),send=panel.querySelector("#ebelu-ai-send"),history=[];
- const add=(text,who)=>{const el=document.createElement("div");el.className="ebelu-ai-bubble "+who;el.textContent=text;messages.append(el);messages.scrollTop=messages.scrollHeight;return el};
+ function escapeHTML(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
+ const safeURL=value=>{try{const u=new URL(value,location.href);return ["http:","https:"].includes(u.protocol)?u.href:null}catch{return null}};
+ function inlineMD(raw){let s=escapeHTML(raw),codes=[];s=s.replace(/`([^`]+)`/g,(_,code)=>{const token="@@CODE"+codes.length+"@@";codes.push("<code>"+code+"</code>");return token});
+ s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,(_,label,url)=>{const safe=safeURL(url);return safe?'<a href="'+safe+'" target="_blank" rel="noopener noreferrer">'+label+'</a>':label});
+ s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/__([^_]+)__/g,"<strong>$1</strong>");
+ s=s.replace(/\*([^*\n]+)\*/g,"<em>$1</em>").replace(/_([^_\n]+)_/g,"<em>$1</em>");
+ s=s.replace(/~~([^~]+)~~/g,"<del>$1</del>");
+ s=s.replace(/@@CODE(\d+)@@/g,(_,i)=>codes[Number(i)]||"");return s}
+ function renderMarkdown(text){const lines=String(text||"").replace(/\r/g,"").split("\n"),out=[];let i=0;
+ while(i<lines.length){let line=lines[i];
+ if(!line.trim()){i++;continue}
+ if(/^\s*```/.test(line)){const lang=line.trim().slice(3).trim();let code=[];i++;while(i<lines.length&&!/^\s*```/.test(lines[i]))code.push(lines[i++]);if(i<lines.length)i++;out.push('<pre class="md-code"><code'+(lang?' data-language="'+escapeHTML(lang)+'"':'')+'>'+escapeHTML(code.join("\n"))+'</code></pre>');continue}
+ if(/^\s*([-*_])\1\1\s*$/.test(line)){out.push("<hr>");i++;continue}
+ const hm=line.match(/^(#{1,6})\s+(.+)$/);if(hm){const level=hm[1].length;out.push("<h"+level+">"+inlineMD(hm[2])+"</h"+level+">");i++;continue}
+ if(/^>\s?/.test(line)){let q=[];while(i<lines.length&&/^>\s?/.test(lines[i]))q.push(lines[i++].replace(/^>\s?/,""));out.push("<blockquote>"+q.map(x=>"<p>"+inlineMD(x)+"</p>").join("")+"</blockquote>");continue}
+ if(/^\s*[-*+]\s+/.test(line)){let items=[];while(i<lines.length&&/^\s*[-*+]\s+/.test(lines[i]))items.push(lines[i++].replace(/^\s*[-*+]\s+/,""));out.push("<ul>"+items.map(x=>"<li>"+inlineMD(x)+"</li>").join("")+"</ul>");continue}
+ if(/^\s*\d+[.)]\s+/.test(line)){let items=[];while(i<lines.length&&/^\s*\d+[.)]\s+/.test(lines[i]))items.push(lines[i++].replace(/^\s*\d+[.)]\s+/,""));out.push("<ol>"+items.map(x=>"<li>"+inlineMD(x)+"</li>").join("")+"</ol>");continue}
+ if(line.includes("|")&&i+1<lines.length&&/^\s*\|?\s*:?-{3,}/.test(lines[i+1])){const cells=x=>x.trim().replace(/^\|/,"").replace(/\|$/,"").split("|").map(c=>c.trim());const head=cells(line);i+=2;let rows=[];while(i<lines.length&&lines[i].includes("|")&&lines[i].trim()){rows.push(cells(lines[i++]));}out.push("<div class=\"md-table-wrap\"><table><thead><tr>"+head.map(c=>"<th>"+inlineMD(c)+"</th>").join("")+"</tr></thead><tbody>"+rows.map(r=>"<tr>"+head.map((_,n)=>"<td>"+inlineMD(r[n]||"")+"</td>").join("")+"</tr>").join("")+"</tbody></table></div>");continue}
+ let para=[line];i++;while(i<lines.length&&lines[i].trim()&&!/^(#{1,6}\s|>\s?|\s*[-*+]\s+|\s*\d+[.)]\s+|\s*```)/.test(lines[i])&&!(lines[i].includes("|")&&i+1<lines.length&&/^\s*\|?\s*:?-{3,}/.test(lines[i+1]))){para.push(lines[i++])}out.push("<p>"+para.map(inlineMD).join("<br>")+"</p>")
+ }
+ return out.join("")}
+ const add=(text,who)=>{const el=document.createElement("div");el.className="ebelu-ai-bubble "+who;if(who==="bot")el.innerHTML=renderMarkdown(text);else el.textContent=text;messages.append(el);messages.scrollTop=messages.scrollHeight;return el};
  const open=()=>{panel.hidden=false;launcher.hidden=true;input.focus()},close=()=>{panel.hidden=true;launcher.hidden=false};
  launcher.addEventListener("click",open);panel.querySelector(".ebelu-ai-close").addEventListener("click",close);
  form.addEventListener("submit",async e=>{e.preventDefault();const prompt=input.value.trim();if(!prompt||send.disabled)return;add(prompt,"user");history.push({role:"user",content:prompt});input.value="";send.disabled=true;send.textContent="…";const pending=add("Ich denke nach …","bot");try{const result=await call("ai-chat",{messages:history});if(!result.success)throw new Error(result.error||"Keine Antwort erhalten.");pending.textContent=result.answer;history.push({role:"assistant",content:result.answer});while(history.length>10)history.shift()}catch(err){pending.textContent=err.message||"Der KI-Assistent ist gerade nicht erreichbar."}finally{send.disabled=false;send.textContent="Senden";input.focus()}});
