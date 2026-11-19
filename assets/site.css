@@ -171,3 +171,24 @@ footer a{color:#00559f!important}
 .topic-card{padding:21px!important}
 .archive-panel{padding:25px!important}
 }
+
+/* Markdown formatting for AI chat */
+.ebelu-ai-bubble.bot h1,.ebelu-ai-bubble.bot h2,.ebelu-ai-bubble.bot h3,.ebelu-ai-bubble.bot h4{line-height:1.25;margin:1em 0 .45em;color:inherit;font-weight:750}
+.ebelu-ai-bubble.bot h1{font-size:1.45em}.ebelu-ai-bubble.bot h2{font-size:1.25em}.ebelu-ai-bubble.bot h3{font-size:1.1em}
+.ebelu-ai-bubble.bot p{margin:.55em 0;line-height:1.65}
+.ebelu-ai-bubble.bot strong{font-weight:750}
+.ebelu-ai-bubble.bot em{font-style:italic}
+.ebelu-ai-bubble.bot ul,.ebelu-ai-bubble.bot ol{padding-left:1.45em;margin:.55em 0;line-height:1.6}
+.ebelu-ai-bubble.bot li{padding-left:.15em;margin:.25em 0}
+.ebelu-ai-bubble.bot blockquote{margin:.7em 0;padding:.55em .9em;border-left:3px solid #f3d34a;background:#f5f8fb;color:#334b60}
+.ebelu-ai-bubble.bot blockquote p{margin:.2em 0}
+.ebelu-ai-bubble.bot a{color:#00559f;text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+.ebelu-ai-bubble.bot code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#edf2f7;padding:.15em .35em;border-radius:4px}
+.ebelu-ai-bubble.bot pre.md-code{background:#152638;color:#eaf3fc;padding:12px;border-radius:8px;overflow:auto;max-width:100%;white-space:pre}
+.ebelu-ai-bubble.bot pre.md-code code{background:transparent;padding:0;color:inherit;font-size:.86em}
+.ebelu-ai-bubble.bot .md-table-wrap{overflow-x:auto;max-width:100%;margin:.75em 0}
+.ebelu-ai-bubble.bot table{border-collapse:collapse;width:100%;min-width:320px;font-size:.92em}
+.ebelu-ai-bubble.bot th,.ebelu-ai-bubble.bot td{border:1px solid #d7e0e8;padding:7px 9px;text-align:left;vertical-align:top}
+.ebelu-ai-bubble.bot th{background:#eef4fa;font-weight:700}
+.ebelu-ai-bubble.bot hr{border:0;border-top:1px solid #dbe3ea;margin:1em 0}
+.ebelu-ai-bubble.bot del{text-decoration:line-through}
