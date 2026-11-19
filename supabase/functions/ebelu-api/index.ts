@@ -17,7 +17,7 @@ async function createIssueTicket(issueId:string){
  if(error)throw new Error("Einmal-Link konnte nicht erstellt werden.");
  return FUNCTION_URL+"?ticket="+token;
 }
-async function limited(prefix:string,req:Request){const {data,error}=await db.rpc("ebelu_consume_rate_limit",{p_key_hash:await sha(prefix+":"+clientKey(req))});return !error&&data===true;}
+async function limited(prefix:string,req:Request){const {data,error}=await db.rpc("ebelu_consume_rate_limit",{p_key_hash:await sha(prefix+":"+clientKey(req))});if(error){console.error("Rate limit RPC failed",error);return true;}return data===true;}
 async function isAdmin(req:Request){
  const expected=Deno.env.get("EBELU_AKTUELL_PASSWORT")||"";
  const token=req.headers.get("x-ebelu-admin-session")||"";
@@ -87,7 +87,7 @@ Deno.serve(async(req)=>{
      return json({success:true,answer:answer.trim(),provider:provider.name});
     }catch(err){console.error("AI provider error",provider.name,String(err));failures.push(provider.name+": network/timeout");}
    }
-   return json({error:"Alle konfigurierten KI-Anbieter sind fehlgeschlagen. Versucht: "+providers.map(p=>p.name).join(", ")+". Bitte später erneut versuchen."},502);
+   const configured=providers.map(p=>p.name);const missing=["OpenRouter","Cerebras","Together"].filter(n=>!configured.includes(n));return json({error:"Alle konfigurierten KI-Anbieter sind fehlgeschlagen. Versucht: "+(configured.join(", ")||"keine")+". Nicht eingerichtet: "+(missing.join(", ")||"keine")+". Backup-Anbieter benötigen ihre API-Secrets in Supabase."},502);
   }
   if(action==="issue-open"){
    if(!await limited("issue",req))return json({error:"Zu viele Versuche. Bitte später erneut versuchen."},429);
