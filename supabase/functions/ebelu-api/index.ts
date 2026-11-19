@@ -71,7 +71,7 @@ Deno.serve(async(req)=>{
    // Failover: try each provider with a configured key, in order. Any network,
    // HTTP, or malformed-response error advances to the next configured provider.
    const providers=[
-    {name:"Groq",key:Deno.env.get("GROQ-EBELU")||Deno.env.get("GROQ_EBELU")||"",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile"},
+    {name:"Groq",key:Deno.env.get("GROQ-EBELU")||Deno.env.get("GROQ_EBELU")||"",url:"https://api.groq.com/openai/v1/chat/completions",model:"openai/gpt-oss-120b"},
     {name:"OpenRouter",key:Deno.env.get("OPENROUTER_EBELU")||"",url:"https://openrouter.ai/api/v1/chat/completions",model:Deno.env.get("OPENROUTER_EBELU_MODEL")||"meta-llama/llama-3.3-70b-instruct"},
     {name:"Cerebras",key:Deno.env.get("CEREBRAS_EBELU")||"",url:"https://api.cerebras.ai/v1/chat/completions",model:Deno.env.get("CEREBRAS_EBELU_MODEL")||"llama-3.3-70b"},
     {name:"Together",key:Deno.env.get("TOGETHER_EBELU")||"",url:"https://api.together.xyz/v1/chat/completions",model:Deno.env.get("TOGETHER_EBELU_MODEL")||"meta-llama/Llama-3.3-70B-Instruct-Turbo"}
