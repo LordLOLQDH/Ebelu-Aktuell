@@ -61,8 +61,6 @@ Deno.serve(async(req)=>{
   }
   if(action==="ai-chat"){
    if(!await limited("ai-chat",req))return json({error:"Zu viele Nachrichten. Bitte warte kurz und versuche es erneut."},429);
-   const apiKey=Deno.env.get("GROQ-EBELU")||Deno.env.get("GROQ_EBELU")||"";
-   if(!apiKey)return json({error:"Der KI-Dienst ist noch nicht konfiguriert. Das Supabase-Secret GROQ-EBELU fehlt."},503);
    const incoming=Array.isArray(body.messages)?body.messages:[];
    const messages=incoming.slice(-10).filter((m:Record<string,unknown>)=>(m.role==="user"||m.role==="assistant")&&typeof m.content==="string").map((m:Record<string,unknown>)=>({role:m.role,content:String(m.content).slice(0,1800)}));
    if(!messages.length||messages[messages.length-1].role!=="user")return json({error:"Bitte gib zuerst eine Frage ein."},400);
@@ -70,11 +68,26 @@ Deno.serve(async(req)=>{
    const {data:recentIssues}=await db.from("ebelu_issues").select("title,edition_number,description").eq("published",true).order("edition_number",{ascending:false}).limit(12);
    const issueContext=(recentIssues||[]).map((i:Record<string,unknown>)=>"Ausgabe "+i.edition_number+": "+i.title+" – "+(i.description||"Keine Beschreibung")).join("\n");
    const system="Du bist der freundliche KI-Assistent von Ebelu Aktuell, einer Schülerzeitung am Ebelu in Stuttgart. Antworte auf Deutsch, verständlich, freundlich und altersgerecht. Hilf bei Schulthemen, erkläre Begriffe und unterstütze beim Lernen, ohne Hausaufgaben nur stumpf zu erledigen. Bei Fragen zu Ebelu Aktuell darfst du nur die unten aufgeführten Ausgaben als bekannte Inhalte nennen. Du hast keinen Zugriff auf vollständige PDF-Artikel oder Live-Websuche. Erfinde keine Artikel, Termine, Personen oder Schulregeln. Wenn du etwas nicht weißt, sage es offen und verweise auf die Redaktion. Gib keine privaten Daten von Schülern preis. Bei persönlichen Krisen oder Gefahren verweise auf eine vertrauenswürdige erwachsene Person.\n\nBekannte veröffentlichte Ausgaben:\n"+(issueContext||"Noch keine veröffentlichten Ausgaben verfügbar.");
-   const response=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},body:JSON.stringify({model:"llama-3.3-70b-versatile",messages:[{role:"system",content:system},...messages],max_completion_tokens:700,temperature:0.6})});
-   if(!response.ok){const detail=await response.text();console.error("Groq API error",response.status,detail.slice(0,500));return json({error:response.status===401?"Der KI-API-Schlüssel wurde von Groq abgelehnt. Bitte das Secret GROQ-EBELU prüfen.":response.status===429?"Der KI-Dienst ist gerade ausgelastet. Bitte versuche es später erneut.":"Der KI-Dienst ist gerade nicht erreichbar."},502);}
-   const result=await response.json();const answer=result?.choices?.[0]?.message?.content;
-   if(typeof answer!=="string"||!answer.trim())return json({error:"Die KI hat keine Antwort geliefert."},502);
-   return json({success:true,answer:answer.trim()});
+   // Failover: try each provider with a configured key, in order. Any network,
+   // HTTP, or malformed-response error advances to the next configured provider.
+   const providers=[
+    {name:"Groq",key:Deno.env.get("GROQ-EBELU")||Deno.env.get("GROQ_EBELU")||"",url:"https://api.groq.com/openai/v1/chat/completions",model:"llama-3.3-70b-versatile"},
+    {name:"OpenRouter",key:Deno.env.get("OPENROUTER_EBELU")||"",url:"https://openrouter.ai/api/v1/chat/completions",model:Deno.env.get("OPENROUTER_EBELU_MODEL")||"meta-llama/llama-3.3-70b-instruct"},
+    {name:"Cerebras",key:Deno.env.get("CEREBRAS_EBELU")||"",url:"https://api.cerebras.ai/v1/chat/completions",model:Deno.env.get("CEREBRAS_EBELU_MODEL")||"llama-3.3-70b"},
+    {name:"Together",key:Deno.env.get("TOGETHER_EBELU")||"",url:"https://api.together.xyz/v1/chat/completions",model:Deno.env.get("TOGETHER_EBELU_MODEL")||"meta-llama/Llama-3.3-70B-Instruct-Turbo"}
+   ].filter(p=>p.key);
+   if(!providers.length)return json({error:"Kein KI-Anbieter ist konfiguriert. Bitte mindestens GROQ-EBELU oder einen Backup-Key hinterlegen."},503);
+   const failures:string[]=[];
+   for(const provider of providers){
+    try{
+     const response=await fetch(provider.url,{method:"POST",headers:{"Authorization":"Bearer "+provider.key,"Content-Type":"application/json"},body:JSON.stringify({model:provider.model,messages:[{role:"system",content:system},...messages],max_tokens:700,temperature:0.6}),signal:AbortSignal.timeout(12000)});
+     if(!response.ok){const detail=await response.text();console.error("AI provider failure",provider.name,response.status,detail.slice(0,300));failures.push(provider.name+": HTTP "+response.status);continue;}
+     const result=await response.json();const answer=result?.choices?.[0]?.message?.content;
+     if(typeof answer!=="string"||!answer.trim()){failures.push(provider.name+": empty response");continue;}
+     return json({success:true,answer:answer.trim(),provider:provider.name});
+    }catch(err){console.error("AI provider error",provider.name,String(err));failures.push(provider.name+": network/timeout");}
+   }
+   return json({error:"Alle konfigurierten KI-Anbieter sind fehlgeschlagen. Versucht: "+providers.map(p=>p.name).join(", ")+". Bitte später erneut versuchen."},502);
   }
   if(action==="issue-open"){
    if(!await limited("issue",req))return json({error:"Zu viele Versuche. Bitte später erneut versuchen."},429);
