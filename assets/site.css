@@ -96,3 +96,78 @@ button,.button,.primary,.secondary,.topic-card,.card,.voucher,.person,.admin-box
 footer{background:#142e4c!important;border-top:5px solid #e5b63e!important;padding:45px 0 24px!important}
 #ebelu-ai-launcher{background:#17385f!important;border:2px solid #e5b63e!important;border-radius:3px!important}.ebelu-ai-panel{border-radius:4px!important}.ebelu-ai-head{background:#17385f!important}
 @media(max-width:700px){.nav{height:70px!important}.brand img{width:125px!important}.front-grid{padding:36px 0!important}.front-copy h1{font-size:44px!important}.front-lead{font-size:17px!important}.front-cover .cover-art{min-height:160px!important}.section{padding:48px 0!important}.section-head h1,.section-head h2{font-size:34px!important}.topic-card{padding:22px!important}.archive-panel{padding:24px!important}.published-issue{padding:12px!important}}
+
+
+/* EBELU official-site inspired redesign: blue portal + warm yellow, white editorial */
+:root{--blue:#00559f;--blue2:#176bb2;--ink:#14263a;--muted:#5a6876;--pale:#f4f8fb;--line:#dce4ec;--paper:#fff;--soft:#f7f9fb;--shadow:0 12px 32px rgba(0,40,90,.08);--radius:0}
+body{font-family:Arial,Helvetica,sans-serif;color:#16283c;background:#fff;line-height:1.55}
+.topline{height:6px;background:#f3d34a}
+header{background:#fff;border-bottom:1px solid #e6eaf0;backdrop-filter:none}
+.nav{height:88px}
+.brand img{width:145px;height:70px}
+.links{gap:26px;color:#173653;font-weight:700}
+.links a{padding:12px 0;border-bottom:3px solid transparent}
+.links a:hover,.links a[aria-current=page]{color:#00559f;border-bottom-color:#f3d34a}
+.menu{background:#f3d34a;color:#173653;border-radius:0}
+.front-hero{background:#fff}
+.front-grid{grid-template-columns:1.15fr .85fr;gap:48px;padding:72px 0 68px}
+.front-copy h1{font-size:clamp(42px,5.6vw,68px)!important;letter-spacing:-.045em!important;line-height:1.02!important;color:#173653!important}
+.front-copy h1 span{color:#00559f!important}
+.front-lead{font-size:18px!important;line-height:1.7!important;color:#485c70!important}
+.front-trust{color:#00559f;font-weight:800;letter-spacing:.13em}
+.front-cover{background:#f3d34a!important;color:#173653!important;box-shadow:none!important;border:0!important;max-width:490px!important;min-height:450px;display:flex;flex-direction:column;justify-content:space-between}
+.front-cover .cover-top{background:#f3d34a!important;color:#173653!important;border-bottom:1px solid #d2b53c;padding:22px 26px!important;display:flex;justify-content:space-between}
+.front-cover .cover-rule{height:1px!important;background:#173653!important}
+.front-cover .cover-label{color:#173653!important;padding:24px 26px 0!important;letter-spacing:.15em;font-weight:800}
+.front-cover .cover-headline{font-size:clamp(35px,4.4vw,54px)!important;color:#173653!important;line-height:1.03!important;padding:8px 26px 18px!important}
+.front-cover .cover-headline em{color:#00559f!important}
+.front-cover .cover-art{background:#fff!important;min-height:230px!important;margin:0 18px 18px!important;padding:24px!important;display:flex;align-items:center;justify-content:center}
+.front-cover .cover-logo{max-height:205px!important;max-width:100%;object-fit:contain}
+.front-cover .cover-bottom{background:#f3d34a!important;color:#173653!important;padding:17px 26px!important;border-top:1px solid #d2b53c}
+.front-strip{background:#00559f!important;color:white!important}
+.front-strip .strip-tag{color:#f3d34a!important;font-weight:900}
+.front-strip p{color:white!important;font-weight:600}
+.section{padding:70px 0!important}
+.section-head h1,.section-head h2{color:#173653!important;font-size:clamp(32px,4vw,48px)!important;letter-spacing:-.04em!important}
+.section-head p{color:#596b7d!important}
+.eyebrow{color:#00559f!important;letter-spacing:.12em}
+.front-topics{gap:20px!important}
+.topic-card{border:1px solid #d9e2eb!important;border-top:4px solid #f3d34a!important;border-radius:0!important;padding:25px!important;box-shadow:none!important;background:#fff!important}
+.topic-news{border-top-color:#00559f!important}.topic-people{border-top-color:#f3d34a!important}.topic-fun{border-top-color:#7fa8cc!important}
+.topic-card h3{font-size:23px!important;color:#173653!important}
+.topic-icon{background:#f3d34a!important;color:#173653!important;border-radius:0!important}
+.topic-link,.text-link{color:#00559f!important;font-weight:800}
+.front-values{background:#f5f8fb!important;border-block:0!important}
+.front-values h2{color:#173653!important}
+.values-list>div{border-bottom:1px solid #d9e2eb!important}
+.values-list>div>b{color:#00559f!important}
+.archive-panel{background:#f3d34a!important;color:#173653!important;border-radius:0!important;padding:38px!important}
+.archive-panel h2,.archive-panel p{color:#173653!important}
+.archive-panel .button,.archive-panel a{background:#00559f!important;color:#fff!important}
+.front-contact{background:#00559f!important;color:white!important}
+.contact-inner h2{color:white!important}
+.contact-inner p{color:#eaf2f9!important}
+.contact-inner .secondary{background:#f3d34a!important;color:#173653!important;border:0!important}
+.published-issue{border:1px solid #dce4ec!important;border-top:4px solid #f3d34a!important;border-radius:0!important}
+.published-issue-info h2{color:#173653!important}
+button,.button,.primary,.secondary,.topic-card,.card,.voucher,.person,.admin-box{border-radius:0!important;box-shadow:none!important;transform:none!important}
+.primary{background:#00559f!important;color:#fff!important}
+.secondary{background:#fff!important;border:1px solid #00559f!important;color:#00559f!important}
+footer{background:#fff!important;border-top:6px solid #f3d34a!important;color:#173653!important}
+footer a{color:#00559f!important}
+#ebelu-ai-launcher{background:#00559f!important;border:2px solid #f3d34a!important;border-radius:50%!important}
+.ebelu-ai-panel{border-radius:0!important}
+.ebelu-ai-head{background:#00559f!important}
+@media(max-width:700px){
+.nav{height:68px!important}
+.brand img{width:120px!important}
+.front-grid{display:flex!important;flex-direction:column!important;padding:38px 0 32px!important;gap:26px!important}
+.front-copy h1{font-size:42px!important}
+.front-lead{font-size:16px!important}
+.front-cover{width:100%!important;max-width:none!important;min-height:0!important}
+.front-cover .cover-art{min-height:165px!important}
+.front-cover .cover-logo{max-height:155px!important}
+.section{padding:48px 0!important}
+.topic-card{padding:21px!important}
+.archive-panel{padding:25px!important}
+}
