@@ -61,7 +61,7 @@ Deno.serve(async(req)=>{
   }
   if(action==="ai-chat"){
    if(!await limited("ai-chat",req))return json({error:"Zu viele Nachrichten. Bitte warte kurz und versuche es erneut."},429);
-   const apiKey=Deno.env.get("GROQ-EBELU")||"";
+   const apiKey=Deno.env.get("GROQ_EBELU")||"";
    if(!apiKey)return json({error:"Der KI-Dienst ist noch nicht konfiguriert. Das Supabase-Secret GROQ-EBELU fehlt."},503);
    const incoming=Array.isArray(body.messages)?body.messages:[];
    const messages=incoming.slice(-10).filter((m:Record<string,unknown>)=>(m.role==="user"||m.role==="assistant")&&typeof m.content==="string").map((m:Record<string,unknown>)=>({role:m.role,content:String(m.content).slice(0,1800)}));
