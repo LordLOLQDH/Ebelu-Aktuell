@@ -117,3 +117,40 @@ body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#202d3b;backgr
 .menu{background:#0866ad!important;color:#fff!important;border:0!important}
 #ebelu-ai-launcher{background:#0866ad!important;color:#fff!important;box-shadow:0 5px 18px rgba(8,58,96,.18)!important}
 @media(max-width:560px){.front-cover{max-width:100%;transform:none!important;background:#fff!important}.front-copy h1{font-size:clamp(40px,11vw,49px)!important}.front-lead{font-size:17px!important}.front-hero{padding:46px 0 50px!important}#ebelu-ai-launcher{right:12px!important;bottom:12px!important;padding:7px 11px 7px 7px!important;gap:7px!important;font-size:13px!important}.ebelu-ai-mark{width:30px!important;height:30px!important;font-size:18px!important}.ebelu-ai-panel{right:8px!important;bottom:62px!important;width:calc(100vw - 16px)!important}}
+
+/* Modern Ebelu refresh: calm blue, clean spacing, no decorative star */
+:root{--blue:#1769b2;--blue2:#3187d2;--ink:#142b42;--muted:#60758a;--pale:#eaf4fc;--line:#d9e6f1;--paper:#fff;--soft:#f5f9fd;--shadow:0 14px 42px rgba(21,64,103,.09);--radius:18px}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+.topline{height:3px;background:linear-gradient(90deg,#1769b2,#4d9bd6)}
+header{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid #e6eef5}
+.nav{height:76px}
+.brand img{width:138px;height:65px}
+.links{gap:8px;color:#425b73}
+.links a{padding:9px 13px;border-radius:999px;transition:background .18s,color .18s}
+.links a:hover,.links a[aria-current=page]{background:#edf5fc;color:#1769b2;border:0}
+.menu{background:#1769b2;color:white;border-radius:12px;padding:10px 15px}
+button,.button{border-radius:13px;transition:transform .18s,box-shadow .18s,background .18s}
+button:hover,.button:hover{transform:translateY(-1px)!important}
+.primary{background:#1769b2;box-shadow:0 6px 18px #1769b226}
+.hero,.front-hero{background:linear-gradient(145deg,#f1f8fe 0%,#fff 65%)}
+.hero h1,.front-copy h1{letter-spacing:-.055em}
+.hero-card,.front-cover{border-radius:20px;box-shadow:0 18px 46px rgba(21,64,103,.11);border:1px solid #dceaf5}
+.front-cover{padding:clamp(20px,4vw,30px);transform:none}
+.cover-art{border-radius:16px;background:linear-gradient(140deg,#e9f4fc,#d7eafb)}
+.cover-rule{height:2px;border-radius:3px}
+.card,.topic-card,.person,.admin-box,.voucher,.published-issue{border-radius:18px;box-shadow:0 8px 24px rgba(18,52,82,.055)}
+.card,.topic-card,.person{border:1px solid #e1ebf4}
+.section{padding:clamp(48px,7vw,76px) 0}
+.section.soft,.front-values{background:#f6fafe}
+.archive-panel{border-radius:18px}
+.front-contact,.access-panel{border-radius:22px}
+#ebelu-ai-launcher{border-radius:999px!important;background:#1769b2!important;box-shadow:0 8px 26px rgba(23,105,178,.25)!important}
+.ebelu-ai-mark{background:white!important;color:#1769b2!important;border-radius:50%!important;font-size:18px!important}
+.ebelu-ai-spark{display:none!important}
+.ebelu-ai-panel{border-radius:20px!important;overflow:hidden;box-shadow:0 18px 48px rgba(17,44,72,.22)!important}
+.ebelu-ai-head{background:#1769b2!important}
+.ebelu-ai-bubble{border-radius:14px!important}
+.ebelu-ai-form textarea{border-radius:13px}
+footer{background:#123a60;color:#eaf4fd}
+@media(max-width:800px){.nav{height:70px}.links{top:70px;padding:14px;border:1px solid #e3edf5;border-radius:0 0 16px 16px;box-shadow:0 14px 30px rgba(20,55,85,.08)}.links a{width:100%;padding:11px 13px}.hero{padding:44px 0 38px}.hero h1{font-size:clamp(38px,10vw,54px)}.hero-art{min-height:270px}}
+@media(max-width:560px){.nav{height:64px}.links{top:64px}.brand img{width:116px;height:54px}.front-cover{padding:20px;border-radius:16px}.cover-art{margin:18px -20px;border-radius:0}.section{padding:44px 0}#ebelu-ai-launcher{padding:7px 13px 7px 7px!important;gap:8px!important;font-size:13px!important}.ebelu-ai-mark{width:30px!important;height:30px!important}.ebelu-ai-panel{width:calc(100vw - 20px)!important;right:10px!important;bottom:72px!important}}
