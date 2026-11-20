@@ -178,3 +178,16 @@ footer{background:#123a60;color:#eaf4fd}
 .contact-direct-card strong{font-size:clamp(14px,2vw,17px);line-height:1.3;overflow-wrap:anywhere;color:#183550}
 .contact-direct-action{font-weight:750;color:#1769b2;margin-top:5px;font-size:14px}
 @media(max-width:560px){.contact-section{padding-top:30px!important;padding-bottom:38px!important}.contact-section .section-head{margin-bottom:20px!important}.contact-section .section-head h1{font-size:36px!important}.contact-section .section-head p{font-size:17px!important}.contact-form-box{padding:20px!important}.contact-form-box .field{margin:12px 0 16px!important}.contact-form-box .field textarea{min-height:125px!important}.contact-direct{margin-top:24px}.contact-direct-grid{grid-template-columns:1fr;gap:10px}.contact-direct-card{padding:18px}.contact-direct-card strong{font-size:16px}}
+
+/* Contact CTA buttons */
+.contact-direct{margin-top:26px!important;max-width:760px!important}
+.contact-direct h2{font-size:clamp(24px,4vw,32px)!important;margin:0 0 8px!important;line-height:1.15!important}
+.contact-direct-grid{display:flex!important;flex-direction:column!important;gap:12px!important;margin-top:18px!important}
+.contact-direct-card{display:flex!important;flex-direction:row!important;align-items:center!important;gap:14px!important;padding:17px 20px!important;min-height:76px!important;border:0!important;border-radius:16px!important;background:#1769b2!important;color:#fff!important;box-shadow:0 6px 18px rgba(23,105,178,.16)!important;text-decoration:none!important}
+.contact-direct-card:hover{transform:translateY(-2px)!important;background:#105c9f!important;box-shadow:0 10px 24px rgba(23,105,178,.24)!important}
+.contact-direct-icon{flex:0 0 40px!important;width:40px!important;height:40px!important;border-radius:12px!important;background:rgba(255,255,255,.17)!important;color:#fff!important;font-size:21px!important}
+.contact-direct-label{display:none!important}
+.contact-direct-card strong{color:#fff!important;font-size:16px!important;font-weight:800!important;flex:1!important;line-height:1.2!important}
+.contact-direct-action{margin:0!important;color:#fff!important;font-size:14px!important;font-weight:700!important;white-space:nowrap!important}
+.contact-direct-action span{display:none!important}
+@media(max-width:560px){.contact-direct-card{padding:15px 16px!important;min-height:68px!important;gap:12px!important}.contact-direct-card strong{font-size:15px!important}.contact-direct-action{font-size:13px!important}}
