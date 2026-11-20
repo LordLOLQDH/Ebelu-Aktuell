@@ -34,7 +34,7 @@ async function restoreAdminSession(){if(!adminSession||!$("login-box"))return;tr
  const messages=panel.querySelector("#ebelu-ai-messages"),form=panel.querySelector("#ebelu-ai-form"),input=panel.querySelector("#ebelu-ai-input"),send=panel.querySelector("#ebelu-ai-send"),history=[];
  function escapeHTML(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));}
  const safeURL=value=>{try{const u=new URL(value,location.href);return ["http:","https:"].includes(u.protocol)?u.href:null}catch{return null}};
- function inlineMD(raw){let s=escapeHTML(raw),codes=[];
+ function inlineMD(raw){let s=escapeHTML(raw).replace(/\\([*_~])/g,"$1"),codes=[];
  s=s.replace(/\x60([^\x60]+)\x60/g,(_,code)=>{const token="@@CODE"+codes.length+"@@";codes.push("<code>"+code+"</code>");return token});
  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,(_,label,url)=>{const safe=safeURL(url);return safe?'<a href="'+safe+'" target="_blank" rel="noopener noreferrer">'+label+'</a>':label});
  s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/__([^_]+)__/g,"<strong>$1</strong>");
