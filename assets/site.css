@@ -127,3 +127,7 @@ footer{background:#142e4c!important;border-top:5px solid #e5b63e!important;paddi
 .front-cover .cover-top span{display:block!important;white-space:normal!important;transform:none!important;font-style:normal!important}
 .front-cover .cover-label,.front-cover .cover-headline,.front-cover .cover-bottom{transform:none!important;font-style:normal!important;text-align:left!important}
 .front-cover .cover-headline em{font-style:normal!important}
+
+/* AI mark: sparkle centered directly above the E, same blue as the letter */
+.ebelu-ai-mark{color:#0866ad!important}
+.ebelu-ai-spark{top:-10px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;color:#0866ad!important;text-shadow:none!important}
